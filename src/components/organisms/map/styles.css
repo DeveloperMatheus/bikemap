@@ -1,0 +1,9 @@
+.map-container {
+  background-color: #fff;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}

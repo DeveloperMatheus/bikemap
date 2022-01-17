@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import loading from '../src/assets/loading.svg'
 import './App.css';
 
+import Map from './components/organisms/map/index'
 import mapsService from './services/maps/maps'
 
 function App() {
@@ -30,10 +31,14 @@ function App() {
         isLoading ? (
           <img src={loading} alt="Carregando mapa" />
         ) : (
-          <p>Abriu</p>
+          <>
+            <h1>Mapa de Bikes</h1>
+
+            <Map />
+          </>
         )
       }
-    </div>
+    </div >
   );
 }
 
