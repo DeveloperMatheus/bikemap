@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import loading from '../src/assets/loading.svg'
 import './App.css';
@@ -8,17 +9,16 @@ import mapsService from './services/maps/maps'
 function App() {
 
   const [isLoading, setIsLoading] = useState(false);
+  const [mapData, setMapData] = useState([]);
 
   async function getAllMyNetworks() {
-    setIsLoading(true)
-    try {
-      const res = await mapsService.getAllNetworks();
-      console.log(res);
-    } catch (error) {
-      alert(error)
-    } finally {
-      setIsLoading(false);
-    }
+    mapsService.getAllNetworks().then((res) => {
+      setMapData(res.data.networks)
+    }).catch((_) => {
+      alert('Algo de errado ocorreu, tente novamente mais tarde');
+    }).finally(() => {
+      setIsLoading(false)
+    })
   }
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function App() {
           <>
             <h1>Mapa de Bikes</h1>
 
-            <Map />
+            <Map data={mapData} />
           </>
         )
       }
