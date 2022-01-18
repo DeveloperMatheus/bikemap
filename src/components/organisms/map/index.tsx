@@ -1,9 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup, LayersControl } from "react-leaflet";
+import { MapData } from "../../../models/mapData";
 import './styles.css'
 
 type MapProps = {
-    data?: any[],
-    placeNetworkMarkerId: (id: string) => void
+    data?: MapData[],
+    placeNetworkMarkerId: (id: string, type: string) => void
 };
 
 export default function Map({ data, placeNetworkMarkerId }: MapProps) {
@@ -36,8 +37,10 @@ export default function Map({ data, placeNetworkMarkerId }: MapProps) {
                 {
                     data?.map((item, index: number) => (
                         <Marker eventHandlers={{
-                            click: () => placeNetworkMarkerId(item.id)
-                        }} key={index} position={[item.latitude, item.longitude]}>
+                            click: () => placeNetworkMarkerId(item.id, item.type),
+                            mouseover: (e) => e.target.openPopup()
+                        }}
+                            key={index} position={[item.latitude, item.longitude]}>
                             <Popup>
                                 {item.name}
                             </Popup>

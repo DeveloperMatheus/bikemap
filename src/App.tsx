@@ -4,18 +4,19 @@ import loading from '../src/assets/loading.svg'
 import './App.css';
 
 import Map from './components/organisms/map/index'
+import { MapData, Network, Station } from './models/mapData';
 import mapsService from './services/maps/maps'
 
 function App() {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [mapData, setMapData] = useState([]);
+  const [mapData, setMapData] = useState<MapData[]>();
 
   async function getAllMyNetworks() {
     setIsLoading(true);
     mapsService.getAllNetworks().then((res) => {
       const networksLocation = processNetworkLocations(res.data.networks)
-      setMapData(networksLocation as any);
+      setMapData(networksLocation);
     }).catch((_) => {
       alert('Algo de errado ocorreu, tente novamente mais tarde');
     }).finally(() => {
@@ -27,36 +28,42 @@ function App() {
     getAllMyNetworks();
   }, []);
 
-  const handleNetworkMark = (id: string) => {
-    mapsService.getAllStationsByNetwork(id).then((res) => {
-      const stationsLocation = processStationLocations(res.data.network.stations)
-      setMapData(stationsLocation as any)
-    }).catch((_) => {
-      alert('Algo de errado ocorreu, tente novamente mais tarde');
-    })
+  const handleNetworkMark = (id: string, type: string) => {
+    if (type === 'network') {
+      mapsService.getAllStationsByNetwork(id).then((res) => {
+        const stationsLocation = processStationLocations(res.data.network.stations)
+        setMapData(stationsLocation)
+      }).catch((_) => {
+        alert('Algo de errado ocorreu, tente novamente mais tarde');
+      })
+    }
   }
 
   /* TODO: As funções processNetworkLocations, e processStationLocations são bem parecidas,
-  tirando o fato que é somente o atributo .location de network. Ver maneira de fazer este processamento em uma única função.
+  Ver maneira de fazer este processamento em uma única função.
   */
-  function processNetworkLocations(stations: any[]) {
-    return stations.map(item => {
+  function processNetworkLocations(stations: Network[]) {
+    return stations.map((item: Network) => {
       return {
         id: item.id,
         name: item.name,
         latitude: item.location.latitude,
         longitude: item.location.longitude,
+        type: 'network'
       }
     })
   }
 
-  function processStationLocations(stations: any[]) {
-    return stations.map(item => {
+  function processStationLocations(stations: Station[]) {
+    return stations.map((item: Station) => {
       return {
         id: item.id,
         name: item.name,
         latitude: item.latitude,
         longitude: item.longitude,
+        free_bikes: item.free_bikes,
+        empty_slots: item.empty_slots,
+        type: 'station'
       }
     })
   }
