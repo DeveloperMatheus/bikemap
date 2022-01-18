@@ -14,8 +14,8 @@ function App() {
   async function getAllMyNetworks() {
     setIsLoading(true);
     mapsService.getAllNetworks().then((res) => {
-      console.log(res)
-      setMapData(res.data.networks);
+      const networksLocation = processNetworkLocations(res.data.networks)
+      setMapData(networksLocation as any);
     }).catch((_) => {
       alert('Algo de errado ocorreu, tente novamente mais tarde');
     }).finally(() => {
@@ -28,7 +28,37 @@ function App() {
   }, []);
 
   const handleNetworkMark = (id: string) => {
-    console.log('network mark ', id);
+    mapsService.getAllStationsByNetwork(id).then((res) => {
+      const stationsLocation = processStationLocations(res.data.network.stations)
+      setMapData(stationsLocation as any)
+    }).catch((_) => {
+      alert('Algo de errado ocorreu, tente novamente mais tarde');
+    })
+  }
+
+  /* TODO: As funções processNetworkLocations, e processStationLocations são bem parecidas,
+  tirando o fato que é somente o atributo .location de network. Ver maneira de fazer este processamento em uma única função.
+  */
+  function processNetworkLocations(stations: any[]) {
+    return stations.map(item => {
+      return {
+        id: item.id,
+        name: item.name,
+        latitude: item.location.latitude,
+        longitude: item.location.longitude,
+      }
+    })
+  }
+
+  function processStationLocations(stations: any[]) {
+    return stations.map(item => {
+      return {
+        id: item.id,
+        name: item.name,
+        latitude: item.latitude,
+        longitude: item.longitude,
+      }
+    })
   }
 
   return (

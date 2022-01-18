@@ -37,9 +37,9 @@ export default function Map({ data, placeNetworkMarkerId }: MapProps) {
                     data?.map((item, index: number) => (
                         <Marker eventHandlers={{
                             click: () => placeNetworkMarkerId(item.id)
-                        }} key={index} position={[item.location.latitude, item.location.longitude]}>
+                        }} key={index} position={[item.latitude, item.longitude]}>
                             <Popup>
-                                {item.name} - {item.location.country}
+                                {item.name}
                             </Popup>
                         </Marker>
                     ))
