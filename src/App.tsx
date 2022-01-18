@@ -12,12 +12,14 @@ function App() {
   const [mapData, setMapData] = useState([]);
 
   async function getAllMyNetworks() {
+    setIsLoading(true);
     mapsService.getAllNetworks().then((res) => {
-      setMapData(res.data.networks)
+      console.log(res)
+      setMapData(res.data.networks);
     }).catch((_) => {
       alert('Algo de errado ocorreu, tente novamente mais tarde');
     }).finally(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     })
   }
 
@@ -29,13 +31,13 @@ function App() {
     <div className="App">
       {
         isLoading ? (
-          <img src={loading} alt="Carregando mapa" />
+          <img src={loading} alt="Carregando mapa" className="loading-image" />
         ) : (
-          <>
-            <h1>Mapa de Bikes</h1>
+          <div className="map-container">
+            <h1 className="title">Mapa de Bikes</h1>
 
             <Map data={mapData} />
-          </>
+          </div>
         )
       }
     </div >
