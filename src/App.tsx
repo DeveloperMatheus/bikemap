@@ -27,6 +27,10 @@ function App() {
     getAllMyNetworks();
   }, []);
 
+  const handleNetworkMark = (id: string) => {
+    console.log('network mark ', id);
+  }
+
   return (
     <div className="App">
       {
@@ -36,7 +40,7 @@ function App() {
           <div className="map-container">
             <h1 className="title">Mapa de Bikes</h1>
 
-            <Map data={mapData} />
+            <Map data={mapData} placeNetworkMarkerId={handleNetworkMark} />
           </div>
         )
       }

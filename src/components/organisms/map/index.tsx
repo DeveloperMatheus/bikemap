@@ -2,10 +2,11 @@ import { MapContainer, TileLayer, Marker, Popup, LayersControl } from "react-lea
 import './styles.css'
 
 type MapProps = {
-    data?: any[]
+    data?: any[],
+    placeNetworkMarkerId: (id: string) => void
 };
 
-export default function Map({ data }: MapProps) {
+export default function Map({ data, placeNetworkMarkerId }: MapProps) {
 
     return (
         <MapContainer style={{ height: 500, width: 700 }} center={[51.505, -0.09]} zoom={2}>
@@ -34,9 +35,11 @@ export default function Map({ data }: MapProps) {
 
                 {
                     data?.map((item, index: number) => (
-                        <Marker key={index} position={[item.location.latitude, item.location.longitude]}>
+                        <Marker eventHandlers={{
+                            click: () => placeNetworkMarkerId(item.id)
+                        }} key={index} position={[item.location.latitude, item.location.longitude]}>
                             <Popup>
-                                A pretty CSS3 popup. <br /> Easily customizable.
+                                {item.name} - {item.location.country}
                             </Popup>
                         </Marker>
                     ))
