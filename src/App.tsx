@@ -9,7 +9,7 @@ import mapsService from './services/maps/maps'
 
 function App() {
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [mapData, setMapData] = useState<MapData[]>();
   const [layer, setLayer] = useState(1);
 
@@ -81,7 +81,7 @@ function App() {
         isLoading ? (
           <img src={loading} alt="Carregando mapa" className="loading-image" />
         ) : (
-          <div className="map-container">
+          <div data-testid="main-container" className="map-container">
             <h1 className="title">Bem vindo ao nosso mapa!</h1>
 
             <h2 className="subtitle">

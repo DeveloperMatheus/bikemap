@@ -10,24 +10,26 @@ type MapProps = {
 export default function Map({ data, placeNetworkMarkerId }: MapProps) {
 
     return (
-        <MapContainer style={{ height: 450, width: 650 }} center={[51.505, -0.09]} zoom={5}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {
-                data?.map((item, index: number) => (
-                    <Marker eventHandlers={{
-                        click: () => placeNetworkMarkerId(item.id, item.type),
-                        mouseover: (e) => e.target.openPopup()
-                    }}
-                        key={index} position={[item.latitude, item.longitude]}>
-                        <Popup>
-                            {item.name}
-                        </Popup>
-                    </Marker>
-                ))
-            }
-        </MapContainer>
+        <div data-testid="my-map">
+            <MapContainer style={{ height: 450, width: 650 }} center={[51.505, -0.09]} zoom={5}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {
+                    data?.map((item, index: number) => (
+                        <Marker eventHandlers={{
+                            click: () => placeNetworkMarkerId(item.id, item.type),
+                            mouseover: (e) => e.target.openPopup()
+                        }}
+                            key={index} position={[item.latitude, item.longitude]}>
+                            <Popup>
+                                {item.name}
+                            </Popup>
+                        </Marker>
+                    ))
+                }
+            </MapContainer>
+        </div>
     )
 }

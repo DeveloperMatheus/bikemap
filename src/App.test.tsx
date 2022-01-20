@@ -1,9 +1,15 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('<Map />', () => {
+  it('should render the map after the loading spinner', async () => {
+    render(<App />);
+
+    const loadingSpinner = screen.getByAltText(/carregando mapa/i);
+    expect(loadingSpinner).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('main-container')).toBeInTheDocument()
+    })
+  })
 });
