@@ -11,11 +11,13 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [mapData, setMapData] = useState<MapData[]>();
+  const [layer, setLayer] = useState(1);
 
   async function getAllMyNetworks() {
     setIsLoading(true);
     mapsService.getAllNetworks().then((res) => {
       const networksLocation = processNetworkLocations(res.data.networks)
+      setLayer(1);
       setMapData(networksLocation);
     }).catch((_) => {
       alert('Algo de errado ocorreu, tente novamente mais tarde');
@@ -31,8 +33,13 @@ function App() {
   const handleNetworkMark = (id: string, type: string) => {
     if (type === 'network') {
       mapsService.getAllStationsByNetwork(id).then((res) => {
-        const stationsLocation = processStationLocations(res.data.network.stations)
-        setMapData(stationsLocation)
+        const stationsLocation = processStationLocations(res.data.network.stations);
+        if (stationsLocation.length) {
+          setLayer(2);
+          setMapData(stationsLocation);
+        } else {
+          alert('Não há estações para esta rede.')
+        }
       }).catch((_) => {
         alert('Algo de errado ocorreu, tente novamente mais tarde');
       })
@@ -75,7 +82,21 @@ function App() {
           <img src={loading} alt="Carregando mapa" className="loading-image" />
         ) : (
           <div className="map-container">
-            <h1 className="title">Mapa de Bikes</h1>
+            <h1 className="title">Bem vindo ao nosso mapa!</h1>
+
+            <h2 className="subtitle">
+              {layer === 1 && 'Modo: Redes'}
+              {layer === 2 && 'Modo: Estações'}
+            </h2>
+
+            <h3 className="subtitle">
+              Após clicar em uma rede <br />
+              basta dar zoom para visualizar melhor! ;)
+            </h3>
+
+            <button onClick={getAllMyNetworks} className="button-network">
+              Resetar
+            </button>
 
             <Map data={mapData} placeNetworkMarkerId={handleNetworkMark} />
           </div>
