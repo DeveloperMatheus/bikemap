@@ -10,7 +10,7 @@ type MapProps = {
 export default function Map({ data, placeNetworkMarkerId }: MapProps) {
 
     return (
-        <div data-testid="my-map">
+        <div data-testid="my-map" aria-hidden="true">
             <MapContainer style={{ height: 450, width: 650 }} center={[51.505, -0.09]} zoom={5}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
