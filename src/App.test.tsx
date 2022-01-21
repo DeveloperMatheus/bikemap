@@ -9,7 +9,16 @@ describe('<Map />', () => {
     expect(loadingSpinner).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByTestId('main-container')).toBeInTheDocument()
+      expect(screen.getByTestId('main-container')).toBeInTheDocument();
     })
+
+    const instructions = screen.getByTestId('instructions');
+    const subtitleText = screen.getByTestId('subtitle-text');
+    const buttonReset = screen.getByTestId('button-reset');
+
+    expect(subtitleText).toHaveTextContent('Modo: Redes');
+    expect(instructions).toBeInTheDocument();
+    expect(subtitleText).toBeInTheDocument();
+    expect(buttonReset).toBeInTheDocument();
   })
 });

@@ -84,17 +84,17 @@ function App() {
           <div data-testid="main-container" className="map-container">
             <h1 className="title">Bem vindo ao nosso mapa!</h1>
 
-            <h2 className="subtitle">
+            <h2 className="subtitle" data-testid="subtitle-text">
               {layer === 1 && 'Modo: Redes'}
               {layer === 2 && 'Modo: Estações'}
             </h2>
 
-            <h3 className="subtitle">
+            <h3 className="subtitle" data-testid="instructions">
               Após clicar em uma rede <br />
               basta dar zoom para visualizar melhor! ;)
             </h3>
 
-            <button onClick={getAllMyNetworks} className="button-network">
+            <button onClick={getAllMyNetworks} className="button-network" data-testid="button-reset">
               Resetar
             </button>
 

@@ -3,6 +3,7 @@
 exports[`<Map /> should render the Map with props 1`] = `
 <div>
   <div
+    aria-hidden="true"
     data-testid="my-map"
   >
     <div
