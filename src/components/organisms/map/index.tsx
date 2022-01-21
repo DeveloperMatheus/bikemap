@@ -24,7 +24,16 @@ export default function Map({ data, placeNetworkMarkerId }: MapProps) {
                         }}
                             key={index} position={[item.latitude, item.longitude]}>
                             <Popup>
-                                {item.name}
+                                <p>{item.name}</p>
+
+                                {
+                                    item.type === 'station' && (
+                                        <>
+                                            <p> Bikes livres: {item.free_bikes}</p>
+                                            <p>Slots vazios: {item.empty_slots}</p>
+                                        </>
+                                    )
+                                }
                             </Popup>
                         </Marker>
                     ))

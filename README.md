@@ -2,6 +2,16 @@
 
 ## Instruções
 
+Antes de qualquer coisa, rode o comando na pasta do projeto:
+
+### `npm install`
+
+ou
+
+### `yarn`
+
+O yarn é se você tiver o mesmo instalado.
+
 Para rodar o projeto, você pode rodar com o NPM ou YARN. É da sua escolha. Porém, os sufixos dos scripts são os mesmos (start, test, build).
 
 ### `npm start`
